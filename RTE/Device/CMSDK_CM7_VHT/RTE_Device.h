@@ -1,84 +1,50 @@
-/*
- * Copyright (c) 2019-2024 Arm Limited. All rights reserved.
+/* -----------------------------------------------------------------------------
+ * Copyright (c) 2016 ARM Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from
+ * the use of this software. Permission is granted to anyone to use this
+ * software for any purpose, including commercial applications, and to alter
+ * it and redistribute it freely, subject to the following restrictions:
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * 1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software in
+ *    a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
+ *
+ * 3. This notice may not be removed or altered from any source distribution.
+ *
+ * $Date:        25. April 2016
+ * $Revision:    V1.0.0
+ *
+ * Project:      RTE Device Configuration for ARM CMSDK_CM device
+ * -------------------------------------------------------------------------- */
+
+//-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
 #ifndef __RTE_DEVICE_H
 #define __RTE_DEVICE_H
 
-// <q> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART0]
-// <i> Configuration settings for Driver_USART0 in component ::Drivers:USART
-#define RTE_USART0 1
+// <q> USART0 (Universal synchronous asynchronous receiver transmitter) [Driver_USART0]
+// <i> Configuration settings for Driver_USART0 in component ::CMSIS Driver:USART
+#define RTE_USART0                      1
 
-// <q> USART (Universal synchronous - asynchronous receiver transmitter) [Driver_USART1]
-// <i> Configuration settings for Driver_USART1 in component ::Drivers:USART
-#define RTE_USART1 1
 
-// <q> MPC (Memory Protection Controller) [Driver_ISRAM0_MPC]
-// <i> Configuration settings for Driver_ISRAM0_MPC in component ::Drivers:MPC
-#define RTE_ISRAM0_MPC 1
+// <q> USART1 (Universal synchronous asynchronous receiver transmitter) [Driver_USART1]
+// <i> Configuration settings for Driver_USART1 in component ::CMSIS Driver:USART
+#define RTE_USART1                      0
 
-// <q> MPC (Memory Protection Controller) [Driver_ISRAM1_MPC]
-// <i> Configuration settings for Driver_ISRAM1_MPC in component ::Drivers:MPC
-#define RTE_ISRAM1_MPC 1
 
-// <q> MPC (Memory Protection Controller) [Driver_SRAM_MPC]
-// <i> Configuration settings for Driver_SRAM_MPC in component ::Drivers:MPC
-#define RTE_SRAM_MPC 1
+// <q> USART2 (Universal synchronous asynchronous receiver transmitter) [Driver_USART2]
+// <i> Configuration settings for Driver_USART2 in component ::CMSIS Driver:USART
+#define RTE_UART2                       0
 
-// <q> MPC (Memory Protection Controller) [Driver_QSPI_MPC]
-// <i> Configuration settings for Driver_QSPI_MPC in component ::Drivers:MPC
-#define RTE_QSPI_MPC 1
 
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_MAIN0]
-// <i> Configuration settings for Driver_PPC_SSE300_MAIN0 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_MAIN0 1
+// <q> USART3 (Universal synchronous asynchronous receiver transmitter) [Driver_USART3]
+// <i> Configuration settings for Driver_USART3 in component ::CMSIS Driver:USART
+#define RTE_UART3                       0
 
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_MAIN_EXP0]
-// <i> Configuration settings for Driver_PPC_SSE300_MAIN_EXP0 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_MAIN_EXP0 1
-
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_MAIN_EXP1]
-// <i> Configuration settings for Driver_PPC_SSE300_MAIN_EXP1 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_MAIN_EXP1 0
-
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_PERIPH0]
-// <i> Configuration settings for Driver_PPC_SSE300_PERIPH0 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_PERIPH0 0
-
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_PERIPH1]
-// <i> Configuration settings for Driver_PPC_SSE300_PERIPH1 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_PERIPH1 0
-
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_PERIPH_EXP0]
-// <i> Configuration settings for Driver_PPC_SSE300_PERIPH_EXP0 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_PERIPH_EXP0 0
-
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_PERIPH_EXP1]
-// <i> Configuration settings for Driver_PPC_SSE300_PERIPH_EXP1 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_PERIPH_EXP1 0
-
-// <q> PPC (Peripheral Protection Controller) [PPC_SSE300_PERIPH_EXP2]
-// <i> Configuration settings for Driver_PPC_SSE300_PERIPH_EXP2 in component ::Drivers:PPC
-#define RTE_PPC_SSE300_PERIPH_EXP2 0
-
-// <q> Flash device emulated by SRAM [Driver_Flash0]
-// <i> Configuration settings for Driver_Flash0 in component ::Drivers:Flash
-#define RTE_FLASH0 1
-
-// <q> I2C SBCon [Driver_I2C0]
-// <i> Configuration settings for Driver_I2C0 in component ::Drivers:I2C
-#define RTE_I2C0 1
-
-#endif /* __RTE_DEVICE_H */
+#endif  /* __RTE_DEVICE_H */
