@@ -33,6 +33,7 @@ project:
       for-context:
       -  +CS300
       -  +CS310
+      -  +CS315
     - component: ARM::Device:Native Driver:SysCounter
       for-context:
       -  +CS300
@@ -46,4 +47,5 @@ project:
       for-context:
       - +CS300
       - +CS310
+      - +CS315
 
