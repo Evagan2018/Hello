@@ -19,153 +19,154 @@ on:
 jobs:
     install_build_execute:
 
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-
-        compiler: [ 
-          {name: AC6,  ext: axf},
-          {name: GCC,  ext: elf}
-        ]
-
-        target: [
-          {type: AVH-CM0plus,                             model: tbd,  board: tbd}, 
-          {type: AVH-CM0,                                 model: tbd,  board: tbd}, 
-          {type: AVH-CM3,                                 model: tbd,  board: tbd}, 
-          {type: AVH-CM4,                                 model: tbd,  board: tbd}, 
-          {type: AVH-CM4_FP,                              model: tbd,  board: tbd}, 
-          {type: AVH-CM7,                                 model: tbd,  board: tbd}, 
-          {type: AVH-CM7_SP,                              model: tbd,  board: tbd}, 
-          {type: AVH-CM7_DP,                              model: tbd,  board: tbd}, 
-          {type: IOTKit_CM23_VHT,                         model: tbd,  board: tbd}, 
-          {type: IOTKit_CM33_VHT,                         model: tbd,  board: tbd}, 
-          {type: IOTKit_CM33_FP_VHT,                      model: tbd,  board: tbd}, 
-          {type: IOTKit_CM33_MPS3,                        model: tbd,  board: tbd}, 
-          {type: IOTKit_CM33_FP_MPS3,                     model: tbd,  board: tbd}, 
-          {type: CS300,                                   model: tbd,  board: V2M-MPS3-SSE-300-FVP},
-          {type: CS310,                                   model: tbd,  board: V2M-MPS3-SSE-310}, 
-          {type: CS315,                                   model: tbd,  board: SSE-315} 
-        ]
- 
-        build: [ 
-          {type: Release},
-          {type: Debug}
-        ]
-
-      max-parallel: 1
-
-    steps:  
-
-      # ----------------------------------------------------------------
-      # Setup required toolchains and license
-      # ----------------------------------------------------------------
-
-      # https://github.com/actions/checkout
-      - name: Checkout 🛎️
-        uses: actions/checkout@v4
-
-      # https://github.com/actions/setup-python
-      - name: Setup Python 3.9 📦
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
-
-      # https://github.com/ARM-software/cmsis-actions
-      - name: Activate vcpkg 🎁
-        uses: ARM-software/cmsis-actions/vcpkg@v1
-
-      # https://github.com/ARM-software/cmsis-actions
-      - name: Activate Arm tool license
-        uses: ARM-software/cmsis-actions/armlm@v1
-
-
-      # ----------------------------------------------------------------
-      # Build executable for a specific target compiler pair
-      # ----------------------------------------------------------------
-      - name: Build executable
-        if: always()
-        continue-on-error: true
-        working-directory: ./
-
-        # Remark regarding the build log redirection (tee command). Do not redirect the build log to the ./out/hello/ folder.
-        # This folder is currently used by the cbuild process. Access operations to this folder during the build operations will throws errors.
-        # The build process creates in ./out/hello/ the following subdirectory structure:  /target_type/build_type/compiler_name/
-
-        run: |
-            echo "Build executable for a specific target compiler pair "
-            cbuild hello.csolution.yml --update-rte --packs --context \
-                hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
-                --toolchain ${{ matrix.compiler.name }} -r \
-                | tee ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-            mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
-
-
-      # ----------------------------------------------------------------
-      # Diagnosis: Show the directory structure of the project folder
-      # ----------------------------------------------------------------
-      - name: Show project folder
-        if: always()
-        continue-on-error: true
-        working-directory: ./
-        run: |
-          echo "Diagnosis: Show the directory structure of the project output folder"
-          tree ./out/hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
-
-
-      # ----------------------------------------------------------------
-      # Upload build log
-      # ----------------------------------------------------------------
-      - name: Upload build log
-        if: always()
-        continue-on-error: true
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-          path: ./out/hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-
-
-      # ----------------------------------------------------------------
-      # Create artifact directory
-      # ----------------------------------------------------------------        
-      - name: Create artifact directory
-        if: always()
-        continue-on-error: true      
-        working-directory: ./
-        run: |
-          mkdir -p artifact
-
-
-      # ----------------------------------------------------------------
-      # Download previous generated executables
-      # ----------------------------------------------------------------
-      - name: Download ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ⏬
-        if: always()
-        continue-on-error: true
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-          path: tmp
-
-
-      # ----------------------------------------------------------------
-      # Move downloaded exectuables to the artifact folder
-      # ----------------------------------------------------------------
-      - name: Move downloaded artifacts
-        if: always()
-        continue-on-error: true
-        working-directory: ./
-        run: |        
-          mv ./tmp/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./artifact/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-
-
-      # ----------------------------------------------------------------
-      # Diagnosis: Show the directory structure of artifacts folder
-      # ----------------------------------------------------------------
-      - name: Show downloaded artifacts
-        if: always()
-        continue-on-error: true    
-        working-directory: ./
-        run: |
-          echo "Show artifact folder"
-          tree artifact
+      runs-on: ubuntu-latest
+  
+      strategy:
+        matrix:
+  
+          compiler: [ 
+            {name: AC6,  ext: axf},
+            {name: GCC,  ext: elf}
+          ]
+  
+          target: [
+            {type: AVH-CM0plus,                             model: tbd,  board: tbd}, 
+            {type: AVH-CM0,                                 model: tbd,  board: tbd}, 
+            {type: AVH-CM3,                                 model: tbd,  board: tbd}, 
+            {type: AVH-CM4,                                 model: tbd,  board: tbd}, 
+            {type: AVH-CM4_FP,                              model: tbd,  board: tbd}, 
+            {type: AVH-CM7,                                 model: tbd,  board: tbd}, 
+            {type: AVH-CM7_SP,                              model: tbd,  board: tbd}, 
+            {type: AVH-CM7_DP,                              model: tbd,  board: tbd}, 
+            {type: IOTKit_CM23_VHT,                         model: tbd,  board: tbd}, 
+            {type: IOTKit_CM33_VHT,                         model: tbd,  board: tbd}, 
+            {type: IOTKit_CM33_FP_VHT,                      model: tbd,  board: tbd}, 
+            {type: IOTKit_CM33_MPS3,                        model: tbd,  board: tbd}, 
+            {type: IOTKit_CM33_FP_MPS3,                     model: tbd,  board: tbd}, 
+            {type: CS300,                                   model: tbd,  board: V2M-MPS3-SSE-300-FVP},
+            {type: CS310,                                   model: tbd,  board: V2M-MPS3-SSE-310}, 
+            {type: CS315,                                   model: tbd,  board: SSE-315} 
+          ]
+   
+          build: [ 
+            {type: Release},
+            {type: Debug}
+          ]
+  
+        max-parallel: 1
+  
+      steps:  
+  
+        # ----------------------------------------------------------------
+        # Setup required toolchains and license
+        # ----------------------------------------------------------------
+  
+        # https://github.com/actions/checkout
+        - name: Checkout 🛎️
+          uses: actions/checkout@v4
+  
+        # https://github.com/actions/setup-python
+        - name: Setup Python 3.9 📦
+          uses: actions/setup-python@v5
+          with:
+            python-version: '3.9'
+  
+        # https://github.com/ARM-software/cmsis-actions
+        - name: Activate vcpkg 🎁
+          uses: ARM-software/cmsis-actions/vcpkg@v1
+  
+        # https://github.com/ARM-software/cmsis-actions
+        - name: Activate Arm tool license
+          uses: ARM-software/cmsis-actions/armlm@v1
+  
+  
+        # ----------------------------------------------------------------
+        # Build executable for a specific target compiler pair
+        # ----------------------------------------------------------------
+        - name: Build executable
+          if: always()
+          continue-on-error: true
+          working-directory: ./
+  
+          # Remark regarding the build log redirection (tee command). Do not redirect the build log to the ./out/hello/ folder.
+          # This folder is currently used by the cbuild process. Access operations to this folder during the build operations will throws errors.
+          # The build process creates in ./out/hello/ the following subdirectory structure:  /target_type/build_type/compiler_name/
+  
+          run: |
+              echo "Build executable for a specific target compiler pair "
+              cbuild hello.csolution.yml --update-rte --packs --context \
+                  hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
+                  --toolchain ${{ matrix.compiler.name }} -r \
+                  | tee ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
+              mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
+  
+  
+        # ----------------------------------------------------------------
+        # Diagnosis: Show the directory structure of the project folder
+        # ----------------------------------------------------------------
+        - name: Show project folder
+          if: always()
+          continue-on-error: true
+          working-directory: ./
+          run: |
+            echo "Diagnosis: Show the directory structure of the project output folder"
+            tree ./out/hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
+  
+  
+        # ----------------------------------------------------------------
+        # Upload build log
+        # ----------------------------------------------------------------
+        - name: Upload build log
+          if: always()
+          continue-on-error: true
+          uses: actions/upload-artifact@v4
+          with:
+            name: ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
+            path: ./out/hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
+  
+  
+        # ----------------------------------------------------------------
+        # Create artifact directory
+        # ----------------------------------------------------------------        
+        - name: Create artifact directory
+          if: always()
+          continue-on-error: true      
+          working-directory: ./
+          run: |
+            mkdir -p artifact
+  
+  
+        # ----------------------------------------------------------------
+        # Download previous generated executables
+        # ----------------------------------------------------------------
+        - name: Download ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ⏬
+          if: always()
+          continue-on-error: true
+          uses: actions/download-artifact@v4
+          with:
+            name: ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
+            path: tmp
+  
+  
+        # ----------------------------------------------------------------
+        # Move downloaded exectuables to the artifact folder
+        # ----------------------------------------------------------------
+        - name: Move downloaded artifacts
+          if: always()
+          continue-on-error: true
+          working-directory: ./
+          run: |        
+            mv ./tmp/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./artifact/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
+  
+  
+        # ----------------------------------------------------------------
+        # Diagnosis: Show the directory structure of artifacts folder
+        # ----------------------------------------------------------------
+        - name: Show downloaded artifacts
+          if: always()
+          continue-on-error: true    
+          working-directory: ./
+          run: |
+            echo "Show artifact folder"
+            tree artifact
+  
