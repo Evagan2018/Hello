@@ -24,7 +24,6 @@ project:
     - component: ARM::CMSIS-Compiler:STDERR:Custom
     - component: ARM::CMSIS-Compiler:STDOUT:Custom
     - component: ARM::CMSIS-Compiler:STDIN:Custom
-
     - component: Device:Startup&C Startup
 
     - component: ARM::Device:Native Driver:IO
@@ -41,8 +40,9 @@ project:
 
     - component: ARM::Device:Native Driver:SysCounter
       for-context:
-      - +AVH-CM0plus
       - +CS300
+      - +CS310
+      - +CS315
 
     - component: ARM::Device:Native Driver:SysTimer
       for-context:
