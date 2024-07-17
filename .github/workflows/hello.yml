@@ -30,19 +30,19 @@ jobs:
           ]
   
           target: [
-            {type: AVH-CM0plus,                             model: tbd,  board: tbd}, 
-            {type: AVH-CM0,                                 model: tbd,  board: tbd}, 
-            {type: AVH-CM3,                                 model: tbd,  board: tbd}, 
-            {type: AVH-CM4,                                 model: tbd,  board: tbd}, 
-            {type: AVH-CM4_FP,                              model: tbd,  board: tbd}, 
-            {type: AVH-CM7,                                 model: tbd,  board: tbd}, 
-            {type: AVH-CM7_SP,                              model: tbd,  board: tbd}, 
-            {type: AVH-CM7_DP,                              model: tbd,  board: tbd}, 
-            {type: IOTKit_CM23_VHT,                         model: tbd,  board: tbd}, 
-            {type: IOTKit_CM33_VHT,                         model: tbd,  board: tbd}, 
-            {type: IOTKit_CM33_FP_VHT,                      model: tbd,  board: tbd}, 
-            {type: IOTKit_CM33_MPS3,                        model: tbd,  board: tbd}, 
-            {type: IOTKit_CM33_FP_MPS3,                     model: tbd,  board: tbd}, 
+            {type: CM0,                                     model: tbd,  board: tbd},           
+            {type: CM0plus,                                 model: tbd,  board: tbd}, 
+            {type: CM3,                                     model: tbd,  board: tbd}, 
+            {type: CM4,                                     model: tbd,  board: tbd}, 
+            {type: CM4_FP,                                  model: tbd,  board: tbd}, 
+            {type: CM7,                                     model: tbd,  board: tbd}, 
+            {type: CM7_SP,                                  model: tbd,  board: tbd}, 
+            {type: CM7_DP,                                  model: tbd,  board: tbd}, 
+            {type: CM23,                                    model: tbd,  board: tbd}, 
+            {type: CM33,                                    model: tbd,  board: tbd}, 
+            {type: CM33_FP,                                 model: tbd,  board: tbd}, 
+            {type: CM33_MPS3,                               model: tbd,  board: tbd}, 
+            {type: CM33_FP_MPS3,                            model: tbd,  board: tbd}, 
             {type: CS300,                                   model: tbd,  board: V2M-MPS3-SSE-300-FVP},
             {type: CS310,                                   model: tbd,  board: V2M-MPS3-SSE-310}, 
             {type: CS315,                                   model: tbd,  board: SSE-315} 
@@ -62,17 +62,17 @@ jobs:
         # ----------------------------------------------------------------
   
         # https://github.com/actions/checkout
-        - name: Checkout 🛎️
+        - name: Checkout
           uses: actions/checkout@v4
   
         # https://github.com/actions/setup-python
-        - name: Setup Python 3.9 📦
+        - name: Setup Python
           uses: actions/setup-python@v5
           with:
             python-version: '3.9'
   
         # https://github.com/ARM-software/cmsis-actions
-        - name: Activate vcpkg 🎁
+        - name: Activate vcpkg
           uses: ARM-software/cmsis-actions/vcpkg@v1
   
         # https://github.com/ARM-software/cmsis-actions
@@ -169,4 +169,4 @@ jobs:
           run: |
             echo "Show artifact folder"
             tree artifact
-  
+ 
