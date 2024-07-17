@@ -98,7 +98,7 @@ jobs:
                   Hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
                   --toolchain ${{ matrix.compiler.name }} -r \
                   | tee ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-              mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
+        #     mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
   
   
         # ----------------------------------------------------------------
@@ -109,9 +109,11 @@ jobs:
           continue-on-error: true
           working-directory: ./
           run: |
-            echo "Diagnosis: Show the directory structure of the project output folder"
-            tree ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
-  
+            echo "Diagnosis: Show the directory structure of the project folder"
+            tree ./
+         # tree ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/
+
+
   
         # ----------------------------------------------------------------
         # Upload build log
