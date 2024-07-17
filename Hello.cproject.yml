@@ -8,9 +8,6 @@ project:
     - group: Main
       files:
         - file: ./main.c
-    - group: App
-      files:
-        - file: ./hello.c
     - group: Board IO
       files:
         - file: ./Board_IO/retarget_stdio.c
