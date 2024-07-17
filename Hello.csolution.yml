@@ -1,9 +1,9 @@
 solution:
 
-  # created-for: CMSIS-Toolbox@2.4.0
+  created-for: CMSIS-Toolbox@2.4.0
   description: Print Hello World and a counter value via UART
   cdefault:
-  compiler: GCC
+
 
   # It is recommended to list the pack or packs that define the device or board used in the csolution.yml file
   packs:
@@ -13,9 +13,9 @@ solution:
     - pack: ARM::V2M_MPS3_SSE_310_BSP          # SSE-310-MPS3_FVP
     - pack: ARM::SSE_315_BSP                   # SSE-315-FVP
     - pack: Keil::V2M-MPS2_CMx_BSP             # For Cortex-M0 .. M33  ;  AVH-CM* devices.
-    - pack: ARM::CMSIS-Compiler                # For retargeting stdout to UART
     - pack: Keil::V2M-MPS2_IOTKit_BSP          # For the IOTKit_CM23_VHT, IOTKit_CM33_VHT, and IOTKit_CM33_FP_VHT devices
-    - pack: Keil::V2M-MPS3_IOTKit_BSP          # For the IOTKit_CM33_VHT and the IOTKit_CM33_FP_MPS3 devices
+    - pack: Keil::V2M-MPS3_IOTKit_BSP          # For the IOTKit_CM33_MPS3 and the IOTKit_CM33_FP_MPS3 devices
+    - pack: ARM::CMSIS-Compiler                # For retargeting stdout to UART
 
 
   target-types:
@@ -28,43 +28,43 @@ solution:
     - type: CS315
       device: ARM::SSE-315-FVP
 
-    - type: AVH-CM0plus
+    - type: CM0plus
       device: ARM::CMSDK_CM0plus_VHT
 
-    - type: AVH-CM0
+    - type: CM0
       device: ARM::CMSDK_CM0_VHT
 
-    - type: AVH-CM3
+    - type: CM3
       device: ARM::CMSDK_CM3_VHT
 
-    - type: AVH-CM4
+    - type: CM4
       device: ARM::CMSDK_CM4_VHT
 
-    - type: AVH-CM4_FP
+    - type: CM4_FP
       device: ARM::CMSDK_CM4_FP_VHT
 
-    - type: AVH-CM7
+    - type: CM7
       device: ARM::CMSDK_CM7_VHT
 
-    - type: AVH-CM7_SP
+    - type: CM7_SP
       device: ARM::CMSDK_CM7_SP_VHT
 
-    - type: AVH-CM7_DP
+    - type: CM7_DP
       device: ARM::CMSDK_CM7_DP_VHT
 
-    - type: IOTKit_CM23_VHT
+    - type: CM23
       device: ARM::IOTKit_CM23_VHT
 
-    - type: IOTKit_CM33_VHT
+    - type: CM33
       device: ARM::IOTKit_CM33_VHT
 
-    - type: IOTKit_CM33_FP_VHT
+    - type: CM33_FP
       device: ARM::IOTKit_CM33_FP_VHT
 
-    - type: IOTKit_CM33_MPS3
+    - type: CM33_MPS3
       device: ARM::IOTKit_CM33_MPS3
 
-    - type: IOTKit_CM33_FP_MPS3
+    - type: CM33_FP_MPS3
       device: ARM::IOTKit_CM33_FP_MPS3
 
                                               # add more hardware targets (don't forget to add the required packs)
