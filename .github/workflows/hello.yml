@@ -30,30 +30,30 @@ jobs:
           ]
   
           target: [
-            {type: CM0,                                     model: tbd,  board: tbd},           
-            {type: CM0plus,                                 model: tbd,  board: tbd}, 
-            {type: CM3,                                     model: tbd,  board: tbd}, 
-            {type: CM4,                                     model: tbd,  board: tbd}, 
-            {type: CM4_FP,                                  model: tbd,  board: tbd}, 
-            {type: CM7,                                     model: tbd,  board: tbd}, 
-            {type: CM7_SP,                                  model: tbd,  board: tbd}, 
-            {type: CM7_DP,                                  model: tbd,  board: tbd}, 
-            {type: CM23,                                    model: tbd,  board: tbd}, 
-            {type: CM33,                                    model: tbd,  board: tbd}, 
-            {type: CM33_FP,                                 model: tbd,  board: tbd}, 
-            {type: CM33_MPS3,                               model: tbd,  board: tbd}, 
-            {type: CM33_FP_MPS3,                            model: tbd,  board: tbd}, 
-            {type: CS300,                                   model: tbd,  board: V2M-MPS3-SSE-300-FVP},
-            {type: CS310,                                   model: tbd,  board: V2M-MPS3-SSE-310}, 
-            {type: CS315,                                   model: tbd,  board: SSE-315} 
+            {type: CM0,              model: tbd,                   board: tbd},
+            {type: CM0plus,          model: tbd,                   board: tbd}, 
+            {type: CM3,              model: tbd,                   board: tbd}, 
+            {type: CM4,              model: tbd,                   board: tbd}, 
+            {type: CM4_FP,           model: tbd,                   board: tbd}, 
+            {type: CM7,              model: tbd,                   board: tbd}, 
+            {type: CM7_SP,           model: tbd,                   board: tbd}, 
+            {type: CM7_DP,           model: tbd,                   board: tbd}, 
+            {type: CM23,             model: tbd,                   board: tbd}, 
+            {type: CM33,             model: tbd,                   board: tbd}, 
+            {type: CM33_FP,          model: tbd,                   board: tbd}, 
+            {type: CM33_MPS3,        model: tbd,                   board: tbd}, 
+            {type: CM33_FP_MPS3,     model: tbd,                   board: tbd}, 
+            {type: CS300,            model: FVP_Corstone_SSE-300,  board: mps3_board},
+            {type: CS310,            model: FVP_Corstone_SSE-310,  board: mps3_board},
+            {type: CS315,            model: FVP_Corstone_SSE-315,  board: mps4_board} 
+
           ]
    
           build: [ 
             {type: Release},
             {type: Debug}
           ]
-  
-  
+    
       steps:  
   
         # ----------------------------------------------------------------
@@ -99,73 +99,22 @@ jobs:
                   | tee ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
               mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
   
+  
         # ----------------------------------------------------------------
-        # Diagnosis: Show the directory structure of the project folder
+        # Execute the previous generated context on a model
         # ----------------------------------------------------------------
-        - name: Show project folder
+        - name: Execute context ${{ matrix.target.type }}_${{ matrix.compiler.name }}_${{ matrix.build.type }} on ${{ matrix.target.model }}
           if: always()
           continue-on-error: true
-          working-directory: ./
+          working-directory: ./         
           run: |
-            echo "Diagnosis: Show the directory structure of the project folder"
-            tree ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/
+              echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
 
+          #   ${{ matrix.target.model }} \
+          #       -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
+          #       -f ${{ matrix.target.model }}.cfg \ 
+          #       -C ${{ matrix.target.board }}.uart0.out_file=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
+          #       --simlimit 60 --stat | tee ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log
 
-  
-        # ----------------------------------------------------------------
-        # Upload build log
-        # ----------------------------------------------------------------
-        - name: Upload build log
-          if: always()
-          continue-on-error: true
-          uses: actions/upload-artifact@v4
-          with:
-            name: ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-            path: ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-  
-  
-        # ----------------------------------------------------------------
-        # Create artifact directory
-        # ----------------------------------------------------------------        
-        - name: Create artifact directory
-          if: always()
-          continue-on-error: true      
-          working-directory: ./
-          run: |
-            mkdir -p artifact
-  
-  
-        # ----------------------------------------------------------------
-        # Download previous generated executables
-        # ----------------------------------------------------------------
-        - name: Download ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-          if: always()
-          continue-on-error: true
-          uses: actions/download-artifact@v4
-          with:
-            name: ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-            path: tmp
-  
-  
-        # ----------------------------------------------------------------
-        # Move downloaded exectuables to the artifact folder
-        # ----------------------------------------------------------------
-        - name: Move downloaded artifacts
-          if: always()
-          continue-on-error: true
-          working-directory: ./
-          run: |        
-            mv ./tmp/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./artifact/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-  
-  
-        # ----------------------------------------------------------------
-        # Diagnosis: Show the directory structure of artifacts folder
-        # ----------------------------------------------------------------
-        - name: Show downloaded artifacts
-          if: always()
-          continue-on-error: true    
-          working-directory: ./
-          run: |
-            echo "Show artifact folder"
-            tree artifact
- 
+              echo "Checking output..."
+          #   test "$(grep "FAIL: " ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log | wc -l)" -eq 0
