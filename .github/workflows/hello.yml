@@ -110,11 +110,11 @@ jobs:
           run: |
               echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
 
-          #   ${{ matrix.target.model }} \
-          #       -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
-          #       -f ${{ matrix.target.model }}.cfg \ 
-          #       -C ${{ matrix.target.board }}.uart0.out_file=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
-          #       --simlimit 60 --stat | tee ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log
+              #   ${{ matrix.target.model }} \
+              #       -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
+              #       -f ${{ matrix.target.model }}.cfg \ 
+              #       -C ${{ matrix.target.board }}.uart0.out_file=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
+              #       --simlimit 60 --stat | tee ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log
 
               echo "Checking output..."
-          #   test "$(grep "FAIL: " ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log | wc -l)" -eq 0
+              #   test "$(grep "FAIL: " ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log | wc -l)" -eq 0
