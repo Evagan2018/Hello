@@ -28,24 +28,24 @@ jobs:
             {name: AC6,  ext: axf},
             {name: GCC,  ext: elf}
           ]
-  
+
           target: [
-            {type: CM0,              model: tbd,                   board: tbd},
-            {type: CM0plus,          model: tbd,                   board: tbd}, 
-            {type: CM3,              model: tbd,                   board: tbd}, 
-            {type: CM4,              model: tbd,                   board: tbd}, 
-            {type: CM4_FP,           model: tbd,                   board: tbd}, 
-            {type: CM7,              model: tbd,                   board: tbd}, 
-            {type: CM7_SP,           model: tbd,                   board: tbd}, 
-            {type: CM7_DP,           model: tbd,                   board: tbd}, 
-            {type: CM23,             model: tbd,                   board: tbd}, 
-            {type: CM33,             model: tbd,                   board: tbd}, 
-            {type: CM33_FP,          model: tbd,                   board: tbd}, 
-            {type: CM33_MPS3,        model: tbd,                   board: tbd}, 
-            {type: CM33_FP_MPS3,     model: tbd,                   board: tbd}, 
-            {type: CS300,            model: FVP_Corstone_SSE-300,  board: mps3_board},
-            {type: CS310,            model: FVP_Corstone_SSE-310,  board: mps3_board},
-            {type: CS315,            model: FVP_Corstone_SSE-315,  board: mps4_board} 
+            {type: CM0,              model: FVP_MPS2_Cortex-M0,      board: tbd},
+            {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  board: tbd}, 
+            {type: CM3,              model: FVP_MPS2_Cortex-M3,      board: tbd}, 
+            {type: CM4,              model: FVP_MPS2_Cortex-M4,      board: tbd}, 
+            {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      board: tbd}, 
+            {type: CM7,              model: FVP_MPS2_Cortex-M7,      board: tbd}, 
+            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7       board: tbd}, 
+            {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      board: tbd}, 
+            {type: CM23,             model: FVP_MPS2_Cortex-M23,     board: tbd}, 
+            {type: CM33,             model: FVP_MPS2_Cortex-M33,     board: tbd}, 
+            {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     board: tbd}, 
+            {type: CM33_MPS3,        model: FVP_MPS2_Cortex-M33,     board: tbd}, 
+            {type: CM33_FP_MPS3,     model: FVP_MPS2_Cortex-M33,     board: tbd}, 
+            {type: CS300,            model: FVP_Corstone_SSE-300,    board: mps3_board},
+            {type: CS310,            model: FVP_Corstone_SSE-310,    board: mps3_board},
+            {type: CS315,            model: FVP_Corstone_SSE-315,    board: mps4_board} 
 
           ]
    
@@ -83,8 +83,8 @@ jobs:
         # Build executable for a specific target compiler pair
         # ----------------------------------------------------------------
         - name: Build executable
-          if: always()
-          continue-on-error: true
+          # if: always()
+          # continue-on-error: true
           working-directory: ./
   
           # Remark regarding the build log redirection (tee command). Do not redirect the build log to the ./out/Hello/ folder.
