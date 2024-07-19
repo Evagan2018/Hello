@@ -26,13 +26,29 @@ ld.exe: warning: C:\w\csolution-examples\Hello\out\Hello\AVH-CM0plus\Debug\Hello
 
 This component is defined with vendor Arm (for Corstone targets), and vendor Keil (for Cortex targets)
     - component: Device:Startup&C Startup
-  
+
+
+## Build fails
+ The following contexts cannot build:
+   **CM33_MPS3** (`device: ARM::IOTKit_CM33_MPS3`) and **CM33_FP_MPS3** (`device: ARM::IOTKit_CM33_FP_MPS3`)
+
+
 
 ## FVP configuration settings
    
-   The privileged mode in **.\Hello\RTE\CMSIS\RTX_Config.h** must be enabled, to allow the USART initialization when
+   The privileged mode in **.\Hello\RTE\CMSIS\RTX_Config.h** must be enabled, to allow the **USART** initialization when
    **FVP_Corstone_SSE-300**, **FVP_Corstone_SSE-310**, and **FVP_Corstone_SSE-315** are used.
   
    **#define OS_PRIVILEGE_MODE           1**
 
-
+## FVP issues
+   No **UART** output is shown for executables which are using the following **FVPs**:
+   ``` txt
+   FVP_MPS2_Cortex-M0
+   FVP_MPS2_Cortex-CM0plus
+   FVP_MPS2_Cortex-M3
+   FVP_MPS2_Cortex-M4
+   FVP_MPS2_Cortex-M7
+   FVP_MPS2_Cortex-M23
+   FVP_MPS2_Cortex-M33   
+   ``` 
