@@ -36,7 +36,7 @@ jobs:
             {type: CM4,              model: FVP_MPS2_Cortex-M4,      board: tbd}, 
             {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      board: tbd}, 
             {type: CM7,              model: FVP_MPS2_Cortex-M7,      board: tbd}, 
-            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7       board: tbd}, 
+            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      board: tbd}, 
             {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      board: tbd}, 
             {type: CM23,             model: FVP_MPS2_Cortex-M23,     board: tbd}, 
             {type: CM33,             model: FVP_MPS2_Cortex-M33,     board: tbd}, 
@@ -104,8 +104,8 @@ jobs:
         # Execute the previous generated context on a model
         # ----------------------------------------------------------------
         - name: Execute context ${{ matrix.target.type }}_${{ matrix.compiler.name }}_${{ matrix.build.type }} on ${{ matrix.target.model }}
-          if: always()
-          continue-on-error: true
+          # if: always()
+          # continue-on-error: true
           working-directory: ./         
           run: |
               echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
