@@ -99,7 +99,9 @@ jobs:
                   | tee ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
               mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
   
-  
+              echo "Checking build output..."
+              test "$(grep "error cbuild: " ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log | wc -l)" -eq 0
+
         # ----------------------------------------------------------------
         # Execute the previous generated context on a model
         # ----------------------------------------------------------------
