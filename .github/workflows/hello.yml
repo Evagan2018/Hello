@@ -86,15 +86,25 @@ jobs:
                 packs-
             path: /home/runner/.cache/arm/packs
 
-        # Experimental: caching vcpkg artifacts
-        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows    
-        # - name: Cache vcpkg
-        # uses: actions/cache@v4
-        # with:
-        #   key: packs-${{ github.run_id }}-${{ matrix.target.type }}
-        #   restore-keys: |
-        #       artifacts-            
-        #   path: /home/runner/work/Hello/Hello/.vcpkg/downloads/artifacts
+        # Experimental: caching RTE folder
+        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+        - name: Cache RTE
+          uses: actions/cache@v4
+          with:
+            key: rte-${{ github.run_id }}-${{ matrix.target.type }}
+            restore-keys: |
+                rte-
+            path: /home/runner/work/Hello/Hello/RTE
+  
+        # Experimental: caching FVP folder
+        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+        - name: Cache FVP
+          uses: actions/cache@v4
+          with:
+            key: fvp-${{ github.run_id }}-${{ matrix.target.type }}
+            restore-keys: |
+                fvp-
+            path: /home/runner/work/Hello/Hello/FVP
   
         # ----------------------------------------------------------------
         # Build executable for a specific target compiler pair
