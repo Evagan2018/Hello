@@ -50,5 +50,19 @@ This component is defined with vendor Arm (for Corstone targets), and vendor Kei
    FVP_MPS2_Cortex-M4
    FVP_MPS2_Cortex-M7
    FVP_MPS2_Cortex-M23
-   FVP_MPS2_Cortex-M33   
+   FVP_MPS2_Cortex-M33
+   ``` 
+
+   When you start one of the following FVP modells for the first time, you will asked to allow public and private network access for thid app:
+   ``` txt
+   Windows Firewall has blocked some features for ...
+   
+       FVP_MPS2_Cortex-CM0plus
+       FVP_MPS2_Cortex-M3
+       FVP_MPS2_Cortex-M4
+       FVP_MPS2_Cortex-M7
+       FVP_MPS2_Cortex-M23
+       FVP_MPS2_Cortex-M33
+
+   on all public and private networks.
    ``` 
