@@ -88,13 +88,13 @@ jobs:
 
         # Experimental: caching vcpkg artifacts
         # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows    
-        - name: Cache vcpkg
-          uses: actions/cache@v4
-          with:
-            key: packs-${{ github.run_id }}-${{ matrix.target.type }}
-            restore-keys: |
-                artifacts-            
-            path: /home/runner/work/Hello/Hello/.vcpkg/downloads/artifacts
+        # - name: Cache vcpkg
+        # uses: actions/cache@v4
+        # with:
+        #   key: packs-${{ github.run_id }}-${{ matrix.target.type }}
+        #   restore-keys: |
+        #       artifacts-            
+        #   path: /home/runner/work/Hello/Hello/.vcpkg/downloads/artifacts
   
         # ----------------------------------------------------------------
         # Build executable for a specific target compiler pair
