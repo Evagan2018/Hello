@@ -75,9 +75,9 @@ jobs:
         # https://github.com/ARM-software/cmsis-actions
         - name: Activate Arm tool license
           uses: ARM-software/cmsis-actions/armlm@v1
-  
+    
+        # Experimental: caching packs
         # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
-        # Experimental
         - name: Cache packs
           uses: actions/cache@v4
           with:
@@ -85,7 +85,16 @@ jobs:
             restore-keys: |
                 packs-
             path: /home/runner/.cache/arm/packs
-  
+
+        # Experimental: caching vcpkg artifacts
+        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows    
+        - name: Cache vcpkg
+          uses: actions/cache@v4
+          with:
+            key: packs-${{ github.run_id }}-${{ matrix.target.type }}
+            restore-keys: |
+                artifacts-            
+            path: /home/runner/work/Hello/Hello/.vcpkg/downloads/artifacts
   
         # ----------------------------------------------------------------
         # Build executable for a specific target compiler pair
