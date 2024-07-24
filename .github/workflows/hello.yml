@@ -157,10 +157,10 @@ jobs:
 
 
               echo " End of simulation "
-              tree .
+              cat  ./fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log
 
               echo "Checking simulation..."
-              if [ $(grep "101 "  fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log) -eq 0)]
+              if [ ($(grep "101 "  fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log) -eq 0)]
                  then 
                    echo 0
               fi
