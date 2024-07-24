@@ -35,7 +35,7 @@ jobs:
            # {type: CM3,              model: FVP_MPS2_Cortex-M3,      instance: fvp_mps2.UART0}, 
            # {type: CM4,              model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
            # {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
-           # {type: CM7,              model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
+            {type: CM7,              model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
            # {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
            # {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
            # {type: CM23,             model: FVP_MPS2_Cortex-M23,     instance: fvp_mps2.UART0}, 
