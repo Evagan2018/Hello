@@ -98,7 +98,6 @@ jobs:
                 rte-
             path: /home/runner/work/Hello/Hello/RTE
 
-        # Experimental: caching FVP folder
         # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
         - name: Cache FVP
           uses: actions/cache@v4
@@ -112,8 +111,6 @@ jobs:
         # Build executable for a specific target compiler pair
         # ----------------------------------------------------------------
         - name: Build executable
-          # if: always()
-          # continue-on-error: true
           working-directory: ./
 
           # Remark regarding the build log redirection (tee command). Do not redirect the build log to the ./out/Hello/ folder.
@@ -123,19 +120,13 @@ jobs:
           run: |
               cbuild Hello.csolution.yml --update-rte --packs --context \
                   Hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
-                  --toolchain ${{ matrix.compiler.name }} -r \
-                  | tee ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-              mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
+                  --toolchain ${{ matrix.compiler.name }} -r
 
-              echo "Checking build output..."
-              test "$(grep "error cbuild: " ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log | wc -l)" -eq 0
 
         # ----------------------------------------------------------------
         # Execute the previous generated context on a model
         # ----------------------------------------------------------------
         - name: Execute context ${{ matrix.target.type }}_${{ matrix.compiler.name }}_${{ matrix.build.type }} on ${{ matrix.target.model }}
-          # if: always()
-          # continue-on-error: true
           working-directory: ./         
           run: |
 
@@ -143,8 +134,8 @@ jobs:
               echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
 
               
-              mkdir -p ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}
-              mv ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/Hello.${{ matrix.compiler.ext }} ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }}
+              # mkdir -p ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}
+              # mv ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/Hello.${{ matrix.compiler.ext }} ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }}
 
               echo " Moved "
               tree ./out/Hello/
