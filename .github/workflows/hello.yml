@@ -30,52 +30,52 @@ jobs:
           ]
 
           target: [
-            {type: CM0,              model: FVP_MPS2_Cortex-M0,      board: tbd},
-            {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  board: tbd}, 
-            {type: CM3,              model: FVP_MPS2_Cortex-M3,      board: tbd}, 
-            {type: CM4,              model: FVP_MPS2_Cortex-M4,      board: tbd}, 
-            {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      board: tbd}, 
-            {type: CM7,              model: FVP_MPS2_Cortex-M7,      board: tbd}, 
-            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      board: tbd}, 
-            {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      board: tbd}, 
-            {type: CM23,             model: FVP_MPS2_Cortex-M23,     board: tbd}, 
-            {type: CM33,             model: FVP_MPS2_Cortex-M33,     board: tbd}, 
-            {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     board: tbd}, 
-            {type: CS300,            model: FVP_Corstone_SSE-300,    board: mps3_board},
-            {type: CS310,            model: FVP_Corstone_SSE-310,    board: mps3_board},
-            {type: CS315,            model: FVP_Corstone_SSE-315,    board: mps4_board} 
+            {type: CM0,              model: FVP_MPS2_Cortex-M0,      instance: fvp_mps2.UART0.out_file},
+            {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  instance: fvp_mps2.UART0.out_file}, 
+            {type: CM3,              model: FVP_MPS2_Cortex-M3,      instance: fvp_mps2.UART0.out_file}, 
+            {type: CM4,              model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0.out_file}, 
+            {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0.out_file}, 
+            {type: CM7,              model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0.out_file}, 
+            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0.out_file}, 
+            {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0.out_file}, 
+            {type: CM23,             model: FVP_MPS2_Cortex-M23,     instance: fvp_mps2.UART0.out_file}, 
+            {type: CM33,             model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0.out_file}, 
+            {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0.out_file}, 
+            {type: CS300,            model: FVP_Corstone_SSE-300,    instance: mps3_board.uart0.out_file},
+            {type: CS310,            model: FVP_Corstone_SSE-310,    instance: mps3_board.uart0.out_file},
+            {type: CS315,            model: FVP_Corstone_SSE-315,    instance: mps4_board.uart0.out_file} 
 
           ]
-   
+
           build: [ 
             {type: Release},
             {type: Debug}
           ]
-    
-      steps:  
-  
+
+      steps:
+
         # ----------------------------------------------------------------
         # Setup required toolchains and license
         # ----------------------------------------------------------------
-  
+
         # https://github.com/actions/checkout
         - name: Checkout
           uses: actions/checkout@v4
-  
+
         # https://github.com/actions/setup-python
         - name: Setup Python
           uses: actions/setup-python@v5
           with:
             python-version: '3.9'
-  
+
         # https://github.com/ARM-software/cmsis-actions
         - name: Activate vcpkg
           uses: ARM-software/cmsis-actions/vcpkg@v1
-  
+
         # https://github.com/ARM-software/cmsis-actions
         - name: Activate Arm tool license
           uses: ARM-software/cmsis-actions/armlm@v1
-    
+
         # Experimental: caching packs
         # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
         - name: Cache packs
@@ -95,7 +95,7 @@ jobs:
             restore-keys: |
                 rte-
             path: /home/runner/work/Hello/Hello/RTE
-  
+
         # Experimental: caching FVP folder
         # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
         - name: Cache FVP
@@ -105,7 +105,7 @@ jobs:
             restore-keys: |
                 fvp-
             path: /home/runner/work/Hello/Hello/FVP
-  
+
         # ----------------------------------------------------------------
         # Build executable for a specific target compiler pair
         # ----------------------------------------------------------------
@@ -113,11 +113,11 @@ jobs:
           # if: always()
           # continue-on-error: true
           working-directory: ./
-  
+
           # Remark regarding the build log redirection (tee command). Do not redirect the build log to the ./out/Hello/ folder.
           # This folder is currently used by the cbuild process. Access operations to this folder during the build operations will throws errors.
           # The build process creates in ./out/Hello/ the following subdirectory structure:  /target_type/build_type/compiler_name/
-  
+
           run: |
               echo "Build executable for a specific target compiler pair "
               cbuild Hello.csolution.yml --update-rte --packs --context \
@@ -125,7 +125,7 @@ jobs:
                   --toolchain ${{ matrix.compiler.name }} -r \
                   | tee ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
               mv ${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log
-  
+
               echo "Checking build output..."
               test "$(grep "error cbuild: " ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.target.type }}.${{ matrix.compiler.name }}.${{ matrix.build.type }}.build.log | wc -l)" -eq 0
 
@@ -142,8 +142,14 @@ jobs:
               #   ${{ matrix.target.model }} \
               #       -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
               #       -f ${{ matrix.target.model }}.cfg \ 
-              #       -C ${{ matrix.target.board }}.uart0.out_file=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
+              #       -C ${{ matrix.instance }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
               #       --simlimit 60 --stat | tee ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log
 
               echo "Checking output..."
               #   test "$(grep "FAIL: " ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log | wc -l)" -eq 0
+
+              echo "Checking simulation..."
+              #   test "$(grep "FAIL: " ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log | wc -l)" -eq 0
+              #   test "$(grep "101 " ${{ matrix.target.board }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log / wc -l)" -eq 0
+              
+
