@@ -30,17 +30,17 @@ jobs:
           ]
 
           target: [
-           # {type: CM0,              model: FVP_MPS2_Cortex-M0,      instance: fvp_mps2.UART0},
-           # {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  instance: fvp_mps2.UART0}, 
-           # {type: CM3,              model: FVP_MPS2_Cortex-M3,      instance: fvp_mps2.UART0}, 
-           # {type: CM4,              model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
-           # {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
+            {type: CM0,              model: FVP_MPS2_Cortex-M0,      instance: fvp_mps2.UART0},
+            {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  instance: fvp_mps2.UART0}, 
+            {type: CM3,              model: FVP_MPS2_Cortex-M3,      instance: fvp_mps2.UART0}, 
+            {type: CM4,              model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
+            {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
             {type: CM7,              model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
-           # {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
-           # {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
-           # {type: CM23,             model: FVP_MPS2_Cortex-M23,     instance: fvp_mps2.UART0}, 
-           # {type: CM33,             model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
-           # {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
+            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
+            {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
+            {type: CM23,             model: FVP_MPS2_Cortex-M23,     instance: fvp_mps2.UART0}, 
+            {type: CM33,             model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
+            {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
             {type: CS300,            model: FVP_Corstone_SSE-300,    instance: mps3_board.uart0},
             {type: CS310,            model: FVP_Corstone_SSE-310,    instance: mps3_board.uart0},
             {type: CS315,            model: FVP_Corstone_SSE-315,    instance: mps4_board.uart0} 
@@ -52,7 +52,6 @@ jobs:
             {type: Debug}
           ]
 
-        max-parallel: 1
 
       steps:
 
@@ -113,10 +112,6 @@ jobs:
         - name: Build executable
           working-directory: ./
 
-          # Remark regarding the build log redirection (tee command). Do not redirect the build log to the ./out/Hello/ folder.
-          # This folder is currently used by the cbuild process. Access operations to this folder during the build operations will throws errors.
-          # The build process creates in ./out/Hello/ the following subdirectory structure:  /target_type/build_type/compiler_name/
-
           run: |
               cbuild Hello.csolution.yml --update-rte --packs --context \
                   Hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
@@ -129,9 +124,6 @@ jobs:
         - name: Execute context ${{ matrix.target.type }}_${{ matrix.compiler.name }}_${{ matrix.build.type }} on ${{ matrix.target.model }}
           working-directory: ./         
           run: |
-
-              echo " Tree before simulation "
-              tree ./out/Hello/
 
               ${{ matrix.target.model }} \
                  -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \
