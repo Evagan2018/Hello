@@ -152,7 +152,7 @@ jobs:
               ${{ matrix.target.model }} \
                  -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \
                  -f ./FVP/${{ matrix.target.model }}.cfg \
-                 -C ${{ matrix.target.instance.out_file }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
+                 -C ${{ matrix.target.instance }}.out_file=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
                  --simlimit 60 --stat
 
 
