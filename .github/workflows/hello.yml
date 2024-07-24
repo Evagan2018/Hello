@@ -143,10 +143,11 @@ jobs:
                  -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/Hello.${{ matrix.compiler.ext }} \                   
                  -f ${{ matrix.target.model }}.cfg \ 
                  -C ${{ matrix.instance }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
-                 --simlimit 60 --stat 
+                 --simlimit 60 --stat
+
 
               echo "Checking simulation..."
-              if [ $(grep "101 " ${{ matrix.target.board }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log) -eq 0)]
+              if [ $(grep "101 "  fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log) -eq 0)]
                  then 
                    echo 0
               fi
