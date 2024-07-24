@@ -156,6 +156,9 @@ jobs:
                  --simlimit 60 --stat
 
 
+              echo " End of simulation "
+              tree .
+
               echo "Checking simulation..."
               if [ $(grep "101 "  fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log) -eq 0)]
                  then 
