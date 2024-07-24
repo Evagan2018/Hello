@@ -130,28 +130,20 @@ jobs:
           working-directory: ./         
           run: |
 
-              tree ./out/Hello/
-              echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
-
-              
-              # mkdir -p ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}
-              # mv ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/Hello.${{ matrix.compiler.ext }} ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }}
-
-              echo " Moved "
+              echo " Tree before simulation "
               tree ./out/Hello/
 
               ${{ matrix.target.model }} \
                  -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \
                  -f ./FVP/${{ matrix.target.model }}.cfg \
-                 -C ${{ matrix.target.instance }}.out_file=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
+                 -C ${{ matrix.target.instance }}.out_file=./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log \
                  --simlimit 60 --stat
 
-
-              echo " End of simulation "
-              cat  ./fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log
+              echo " Show simulation output"
+              cat  ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log
 
               echo "Checking simulation..."
-              if [ $(grep "101 " fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log) -eq 1 ]
+              if [ $(grep "101 " ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log) -eq 1 ]
               then 
                    echo 0
               else 
