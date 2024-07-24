@@ -30,20 +30,20 @@ jobs:
           ]
 
           target: [
-           # {type: CM0,              model: FVP_MPS2_Cortex-M0,      instance: fvp_mps2.UART0.out_file},
-           # {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM3,              model: FVP_MPS2_Cortex-M3,      instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM4,              model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM7,              model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM23,             model: FVP_MPS2_Cortex-M23,     instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM33,             model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0.out_file}, 
-           # {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0.out_file}, 
-            {type: CS300,            model: FVP_Corstone_SSE-300,    instance: mps3_board.uart0.out_file},
-            {type: CS310,            model: FVP_Corstone_SSE-310,    instance: mps3_board.uart0.out_file},
-            {type: CS315,            model: FVP_Corstone_SSE-315,    instance: mps4_board.uart0.out_file} 
+           # {type: CM0,              model: FVP_MPS2_Cortex-M0,      instance: fvp_mps2.UART0},
+           # {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  instance: fvp_mps2.UART0}, 
+           # {type: CM3,              model: FVP_MPS2_Cortex-M3,      instance: fvp_mps2.UART0}, 
+           # {type: CM4,              model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
+           # {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
+           # {type: CM7,              model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
+           # {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
+           # {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
+           # {type: CM23,             model: FVP_MPS2_Cortex-M23,     instance: fvp_mps2.UART0}, 
+           # {type: CM33,             model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
+           # {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
+            {type: CS300,            model: FVP_Corstone_SSE-300,    instance: mps3_board.uart0},
+            {type: CS310,            model: FVP_Corstone_SSE-310,    instance: mps3_board.uart0},
+            {type: CS315,            model: FVP_Corstone_SSE-315,    instance: mps4_board.uart0} 
 
           ]
 
@@ -152,7 +152,7 @@ jobs:
               ${{ matrix.target.model }} \
                  -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \
                  -f ./FVP/${{ matrix.target.model }}.cfg \
-                 -C ${{ matrix.target.instance }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
+                 -C ${{ matrix.target.instance.out_file }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
                  --simlimit 60 --stat
 
 
