@@ -143,7 +143,7 @@ jobs:
               cat  ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log
 
               echo "Checking simulation..."
-              if [ "$(grep "101 " ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log)" -eq 1 ]
+              if [ "$(grep -c "101 " ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log)" -eq 1 ]
               then 
                    echo 0
               else 
