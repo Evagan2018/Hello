@@ -140,7 +140,8 @@ jobs:
               echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
 
               ${{ matrix.target.model }} \
-                 -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
+                  # -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
+                 -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/Hello.${{ matrix.compiler.ext }} \                   
                  -f ${{ matrix.target.model }}.cfg \ 
                  -C ${{ matrix.instance }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
                  --simlimit 60 --stat 
