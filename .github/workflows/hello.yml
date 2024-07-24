@@ -139,17 +139,14 @@ jobs:
           run: |
               echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
 
-              #   ${{ matrix.target.model }} \
-              #       -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
-              #       -f ${{ matrix.target.model }}.cfg \ 
-              #       -C ${{ matrix.instance }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
-              #       --simlimit 60 --stat | tee ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log
-
-              echo "Checking output..."
-              #   test "$(grep "FAIL: " ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log | wc -l)" -eq 0
+              ${{ matrix.target.model }} \
+                 -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \ 
+                 -f ${{ matrix.target.model }}.cfg \ 
+                 -C ${{ matrix.instance }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log \
+                 --simlimit 60 --stat 
 
               echo "Checking simulation..."
-              #   test "$(grep "FAIL: " ${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.avh.log | wc -l)" -eq 0
-              #   test "$(grep "101 " ${{ matrix.target.board }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log / wc -l)" -eq 0
-              
-
+              if [ $(grep "101 " ${{ matrix.target.board }}=fvp_stdout_${{ matrix.target.model }}_${{ matrix.compiler.name }}_${{ matrix.build.type }}.simulation.log) -eq 0)]
+                 then 
+                   echo 0
+              fi
