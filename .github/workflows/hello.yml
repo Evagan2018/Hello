@@ -138,7 +138,7 @@ jobs:
           run: |
               echo " Execute ${{ matrix.build.type }} on ${{ matrix.target.model }} build with ${{ matrix.compiler.name }} and ${{ matrix.build.type }}"
              
-
+              mkdir -p ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}
               mv ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/Hello.${{ matrix.compiler.ext }} ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }}
 
               ${{ matrix.target.model }} \
