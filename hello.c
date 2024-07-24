@@ -39,6 +39,7 @@ static void app_main (void *argument) {
     if (count > 100) printf ("\x04");  // EOT (0x04) stops simulation
     count++;
     osDelay (100);
+    osReplay(fail_test)
   }
 }
 
