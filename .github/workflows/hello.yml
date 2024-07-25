@@ -64,6 +64,14 @@ jobs:
         - name: Activate Arm tool license
           uses: ARM-software/cmsis-actions/armlm@v1
 
+        - name: Cache packs
+          uses: actions/cache@v4
+          with:
+            key: packs-${{ github.run_id }}
+            restore-keys: |
+                packs-
+            path: /home/runner/.cache/arm/packs
+
         - name: Build executable
           working-directory: ./
 
