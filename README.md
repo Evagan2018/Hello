@@ -4,25 +4,16 @@ This project prints "Hello World" and a counter value via the UART output. It is
 
 ## Prerequisites
 
-### Tools
-
-- [CMSIS-Toolbox 2.4.0](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases) or higher
-- [Keil MDK 5.40](https://www2.keil.com/mdk5/)
-  - Arm Compiler 6.18 (part of MDK, Eval Version sufficient for compilation)
-  - Arm Virtual Hardware for Corstone-300 v11.24.24 (requires MDK - Professional)
-
-
-### Packs
-
-- Required packs are listed in the file [`Hello.csolution.yml`](./Hello.csolution.yml)
+- Tools are installed using [vcpkg](https://learn.arm.com/learning-paths/microcontrollers/vcpkg-tool-installation/installation/). The latest version of the tools are available from [ARM tools Artifactory](https://www.keil.arm.com/artifacts/) are installed.
+- Packs are listed in the file [`Hello.csolution.yml`](./Hello.csolution.yml) and installed using `cbuild`.
 
 ## Project Structure
 
 The project is generated using the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/README.md) and is defined in [`csolution`](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-tools.md#csolution-invocation) format:
 
-
 - [`Hello.csolution.yml`](./Hello.csolution.yml) lists the required packs and defines the hardware target and build-types (along with the compiler).
 - [`Hello.cproject.yml`](./Hello.cproject.yml) defines the source files and the software components.
+- [`hello.yml`](./.github/workflows/hello.yml) includes a matrix with targets, compilers, and build types which will be used for CI tests on GitHub.
 
 ## Generate a Project
 
@@ -33,31 +24,33 @@ To generate a project for a specific target-type, compiler, and build configurat
 ```
 
 - **--toolchain**   Specifies which compiler should be used for building the executable.
-- **-r**            Forces a clean rebuild
-- **--packs**       Forces the download of required packs
+- **-r**            Forces a clean rebuild.
+- **--packs**       Forces the download of required packs.
 - **--update-rte**  Updates the run time environment.
-
-
+- **Debug**         The selected build type.
+- **CS300**         The selected target type.
 
 ## Execute Project
 
-The project is configured for execution on Arm Virtual Hardware which removes the requirement for a physical hardware board.  
+The project is configured for execution on [Arm Virtual Hardware](https://developer.arm.com/Tools%20and%20Software/Arm%20Virtual%20Hardware) which removes the requirement for a physical hardware board.  
 
-- When using MDK-Professional, you may execute it with the command:
+- For running a specific project executable (generated for a specific context, build type, and compiler) use the following commandline:
 
-### For debug type
+### Example 1: For build type Debug, compiler AC6, and target type CM4
+
   ```txt
-  > C:/Keil_v5/ARM/VHT/VHT_Corstone_SSE-300_Ethos-U55 -f vht-config.txt -a ./out/Debug/Hello.axf
+  > FVP_MPS2_Cortex-M4 -a ./out/Hello/CM4/Debug/AC6/Hello.axf -f ./FVP/FVP_MPS2_Cortex-M4.cfg --simlimit 60
 ```
 
-### For release type
+### Example 2: For build type Release, compiler GCC, and target type CS310
+
   ```txt
-  > C:/Keil_v5/ARM/VHT/VHT_Corstone_SSE-300_Ethos-U55 -f vht-config.txt -a ./out/Release/Hello.axf
+  > FVP_Corstone_SSE-310 -a ./out/Hello/CS310/Release/GCC/Hello.axf -f ./FVP/FVP_Corstone_SSE-310.cfg --simlimit 60
   ```
 
-- **-a**  Defines the path to the generated executable 
+- **-a**  Defines the path to the generated executable.
 - **-f**  Specifies the configuration file for the used [`Arm Virtual Hardware`](https://arm-software.github.io/AVH/main/overview/html/index.html)
-
+- **simlimit 60** Set the maximum time for the simulation
 
 - [Keil Studio Cloud](https://studio.keil.arm.com/) integrates also the Arm Virtual Hardware VHT_Corstone_SSE-300_Ethos-U55 model. The steps to use the example are:
   - Start [Keil Studio Cloud](https://studio.keil.arm.com/) and login to the system using your account.
