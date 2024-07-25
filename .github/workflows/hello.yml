@@ -15,7 +15,6 @@ on:
 
   schedule:
     - cron: '00 22 * * 0'
-
 jobs:
     install_build_execute:
 
@@ -23,30 +22,26 @@ jobs:
   
       strategy:
         matrix:
-  
           compiler: [ 
             {name: AC6,  ext: axf},
             {name: GCC,  ext: elf}
           ]
-
           target: [
-            {type: CM0,              model: FVP_MPS2_Cortex-M0,      instance: fvp_mps2.UART0},
-            {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  instance: fvp_mps2.UART0}, 
-            {type: CM3,              model: FVP_MPS2_Cortex-M3,      instance: fvp_mps2.UART0}, 
-            {type: CM4,              model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
-            {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      instance: fvp_mps2.UART0}, 
-            {type: CM7,              model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
-            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
-            {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      instance: fvp_mps2.UART0}, 
-            {type: CM23,             model: FVP_MPS2_Cortex-M23,     instance: fvp_mps2.UART0}, 
-            {type: CM33,             model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
-            {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     instance: fvp_mps2.UART0}, 
-            {type: CS300,            model: FVP_Corstone_SSE-300,    instance: mps3_board.uart0},
-            {type: CS310,            model: FVP_Corstone_SSE-310,    instance: mps3_board.uart0},
-            {type: CS315,            model: FVP_Corstone_SSE-315,    instance: mps4_board.uart0} 
-
+            {type: CM0,              model: FVP_MPS2_Cortex-M0,      uart: fvp_mps2.UART0},
+            {type: CM0plus,          model: FVP_MPS2_Cortex-M0plus,  uart: fvp_mps2.UART0}, 
+            {type: CM3,              model: FVP_MPS2_Cortex-M3,      uart: fvp_mps2.UART0}, 
+            {type: CM4,              model: FVP_MPS2_Cortex-M4,      uart: fvp_mps2.UART0}, 
+            {type: CM4_FP,           model: FVP_MPS2_Cortex-M4,      uart: fvp_mps2.UART0}, 
+            {type: CM7,              model: FVP_MPS2_Cortex-M7,      uart: fvp_mps2.UART0}, 
+            {type: CM7_SP,           model: FVP_MPS2_Cortex-M7,      uart: fvp_mps2.UART0}, 
+            {type: CM7_DP,           model: FVP_MPS2_Cortex-M7,      uart: fvp_mps2.UART0}, 
+            {type: CM23,             model: FVP_MPS2_Cortex-M23,     uart: fvp_mps2.UART0}, 
+            {type: CM33,             model: FVP_MPS2_Cortex-M33,     uart: fvp_mps2.UART0}, 
+            {type: CM33_FP,          model: FVP_MPS2_Cortex-M33,     uart: fvp_mps2.UART0}, 
+            {type: CS300,            model: FVP_Corstone_SSE-300,    uart: mps3_board.uart0},
+            {type: CS310,            model: FVP_Corstone_SSE-310,    uart: mps3_board.uart0},
+            {type: CS315,            model: FVP_Corstone_SSE-315,    uart: mps4_board.uart0} 
           ]
-
           build: [ 
             {type: Release},
             {type: Debug}
@@ -55,86 +50,42 @@ jobs:
 
       steps:
 
-        # ----------------------------------------------------------------
-        # Setup required toolchains and license
-        # ----------------------------------------------------------------
-
-        # https://github.com/actions/checkout
-        - name: Checkout
+        - name: Checkout repo
           uses: actions/checkout@v4
 
-        # https://github.com/actions/setup-python
         - name: Setup Python
           uses: actions/setup-python@v5
           with:
             python-version: '3.9'
 
-        # https://github.com/ARM-software/cmsis-actions
-        - name: Activate vcpkg
+        - name: Install tools
           uses: ARM-software/cmsis-actions/vcpkg@v1
 
-        # https://github.com/ARM-software/cmsis-actions
         - name: Activate Arm tool license
           uses: ARM-software/cmsis-actions/armlm@v1
 
-        # Experimental: caching packs
-        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
-        - name: Cache packs
-          uses: actions/cache@v4
-          with:
-            key: packs-${{ github.run_id }}-${{ matrix.target.type }}
-            restore-keys: |
-                packs-
-            path: /home/runner/.cache/arm/packs
-
-        # Experimental: caching RTE folder
-        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
-        - name: Cache RTE
-          uses: actions/cache@v4
-          with:
-            key: rte-${{ github.run_id }}-${{ matrix.target.type }}
-            restore-keys: |
-                rte-
-            path: /home/runner/work/Hello/Hello/RTE
-
-        # https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
-        - name: Cache FVP
-          uses: actions/cache@v4
-          with:
-            key: fvp-${{ github.run_id }}-${{ matrix.target.type }}
-            restore-keys: |
-                fvp-
-            path: /home/runner/work/Hello/Hello/FVP
-
-        # ----------------------------------------------------------------
-        # Build executable for a specific target compiler pair
-        # ----------------------------------------------------------------
         - name: Build executable
           working-directory: ./
 
           run: |
-              cbuild Hello.csolution.yml --update-rte --packs --context \
-                  Hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
+              cbuild Hello.csolution.yml --update-rte --packs \
+                  --context Hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
                   --toolchain ${{ matrix.compiler.name }} -r
 
-
-        # ----------------------------------------------------------------
-        # Execute the previous generated context on a model
-        # ----------------------------------------------------------------
-        - name: Execute context ${{ matrix.target.type }}_${{ matrix.compiler.name }}_${{ matrix.build.type }} on ${{ matrix.target.model }}
-          working-directory: ./         
+        - name: Execute context Hello.${{ matrix.build.type }}+${{ matrix.target.type }}
+          working-directory: ./
           run: |
 
               ${{ matrix.target.model }} \
                  -a ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/Hello.${{ matrix.compiler.ext }} \
                  -f ./FVP/${{ matrix.target.model }}.cfg \
-                 -C ${{ matrix.target.instance }}.out_file=./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log \
+                 -C ${{ matrix.target.uart }}.out_file=./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log \
                  --simlimit 60 --stat
 
-              echo " Show simulation output"
+              echo " Show simulation UART output"
               cat  ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log
 
-              echo "Checking simulation..."
+              echo "Checking simulation UART output"
               if [ "$(grep -c "Hello World 101" ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log)" -eq 1 ]
               then 
                    exit 0
