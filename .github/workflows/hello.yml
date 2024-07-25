@@ -92,7 +92,7 @@ jobs:
               cat  ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log
 
               echo "Checking simulation UART output"
-              if [ "$(grep -c "Hello World 101" ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log)" -eq 1 ]
+              if [ "$(grep -c "Hello World 100" ./out/Hello/${{ matrix.target.type }}/${{ matrix.build.type }}/${{ matrix.compiler.name }}/fvp_stdout.log)" -eq 1 ]
               then 
                    exit 0
               else 
