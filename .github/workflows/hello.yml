@@ -67,9 +67,7 @@ jobs:
         - name: Cache packs
           uses: actions/cache@v4
           with:
-            key: packs-${{ github.run_id }}
-            restore-keys: |
-                packs-
+            key: packs-hello
             path: /home/runner/.cache/arm/packs
 
         - name: Build executable
