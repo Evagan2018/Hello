@@ -61,12 +61,6 @@ solution:
     - type: CM33_FP
       device: ARM::IOTKit_CM33_FP_VHT
 
-    - type: CM33_MPS3
-      device: ARM::IOTKit_CM33_MPS3
-
-    - type: CM33_FP_MPS3
-      device: ARM::IOTKit_CM33_FP_MPS3
-
                                               # add more hardware targets (don't forget to add the required packs)
   build-types:                                # defines toolchain options for 'debug' and 'release'
     - type: Debug
