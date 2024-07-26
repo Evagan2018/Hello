@@ -1,4 +1,4 @@
-name: Hello example workflow. 1 job for install, build, and execute. 
+name: Hello-CI example workflow. 1 job for install, build, and execute.
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ jobs:
     install_build_execute:
 
       runs-on: ubuntu-latest
-  
+
       strategy:
         matrix:
           compiler: [ 
@@ -41,16 +41,10 @@ jobs:
             {type: Debug}
           ]
 
-
       steps:
 
         - name: Checkout repo
           uses: actions/checkout@v4
-
-        - name: Setup Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: '3.9'
 
         - name: Install tools
           uses: ARM-software/cmsis-actions/vcpkg@v1
@@ -61,7 +55,7 @@ jobs:
         - name: Cache packs
           uses: actions/cache@v4
           with:
-            key: packs-hello
+            key: cmsis-packs
             path: /home/runner/.cache/arm/packs
 
         - name: Build executable
@@ -70,7 +64,7 @@ jobs:
           run: |
               cbuild Hello.csolution.yml --update-rte --packs \
                   --context Hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
-                  --toolchain ${{ matrix.compiler.name }} -r
+                  --toolchain ${{ matrix.compiler.name }} --rebuild
 
         - name: Execute context Hello.${{ matrix.build.type }}+${{ matrix.target.type }}
           working-directory: ./
