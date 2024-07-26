@@ -1,6 +1,6 @@
 # Hello project
 
-This project prints "Hello World" and a counter value via the UART output. It is configured for Arm Virtual Hardware, but other target hardware that provides a CMSIS Driver:USART can be easily added.
+This project prints "Hello World" and a counter value via the UART output. It is configured for [Arm Virtual Hardware](https://arm-software.github.io/AVH/main/simulation/html/index.html), but other target hardware that provides a [CMSIS Driver:USART](https://arm-software.github.io/CMSIS_6/latest/Driver/group__usart__interface__gr.html) can be easily added.
 
 ## Prerequisites
 
@@ -11,9 +11,14 @@ This project prints "Hello World" and a counter value via the UART output. It is
 
 The project is generated using the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/README.md) and is defined in [`csolution`](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-tools.md#csolution-invocation) format:
 
-- [`Hello.csolution.yml`](./Hello.csolution.yml) lists the required packs and defines the hardware target and build-types (along with the compiler).
-- [`Hello.cproject.yml`](./Hello.cproject.yml) defines the source files and the software components.
-- [`hello.yml`](./.github/workflows/hello.yml) includes a matrix with targets, compilers, and build types which will be used for CI tests on GitHub.
+Files and directories         | Content
+:-----------------------------|----------
+[.github/workflows/](.github/workflows) | The workflow file [`hello.yml`](./.github/workflows/hello.yml) includes a matrix with targets, compilers, and build types which will be used for CI tests on GitHub.
+[`Hello.csolution.yml`](./Hello.csolution.yml) | Lists the required packs and defines the hardware target and build-types (along with the compiler).
+[`Hello.cproject.yml`](./Hello.cproject.yml)  | Defines the source files and the software components.
+[FVP](FVP/) | Includes configuration files for the for [Arm Virtual Hardware](https://arm-software.github.io/AVH/main/simulation/html/index.html) models.
+[RTE/Device/](RTE/Device/) | Includes for each device its specific `RTE_Device.h` file.
+[RTE/CMSIS/RTX_Config.h](RTE/CMSIS/RTX_Config.h) | The `RTX_Config.h` file which is used for all contexts.
 
 ## Generate a Project
 
@@ -36,13 +41,13 @@ The project is configured for execution on [Arm Virtual Hardware](https://develo
 
 - For running a specific project executable (generated for a specific context, build type, and compiler) use the following commandline:
 
-### Example 1: For build type Debug, compiler AC6, and target type CM4
+### Example 1: for build type Debug, compiler AC6, and target type CM4
 
   ```txt
   > FVP_MPS2_Cortex-M4 -a ./out/Hello/CM4/Debug/AC6/Hello.axf -f ./FVP/FVP_MPS2_Cortex-M4.cfg --simlimit 60
 ```
 
-### Example 2: For build type Release, compiler GCC, and target type CS310
+### Example 2: for build type Release, compiler GCC, and target type CS310
 
   ```txt
   > FVP_Corstone_SSE-310 -a ./out/Hello/CS310/Release/GCC/Hello.axf -f ./FVP/FVP_Corstone_SSE-310.cfg --simlimit 60
