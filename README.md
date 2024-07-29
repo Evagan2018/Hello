@@ -1,15 +1,17 @@
-# Hello-CI project
+# AVH-Hello
 
-This project prints "Hello World" and a counter value via the UART output. It is configured for [Arm Virtual Hardware](https://arm-software.github.io/AVH/main/simulation/html/index.html), but other target hardware that provides a [CMSIS Driver:USART](https://arm-software.github.io/CMSIS_6/latest/Driver/group__usart__interface__gr.html) can be easily added.
+This repository contains a CI project with a test matrix that uses [GitHub Actions](https://github.com/features/actions) on a [GitHub-hosted runner](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners) with an Ubuntu Linux system. The application module [`hello.c`](.\hello.c) prints "Hello World" with count value to the UART output. It is configured for [Arm Virtual Hardware - Fixed Virtual Platforms](https://arm-software.github.io/AVH/main/simulation/html/index.html) (AVH FVP), but it is easy to re-target it to hardware that provides a [CMSIS Driver:USART](https://arm-software.github.io/CMSIS_6/latest/Driver/group__usart__interface__gr.html).
+
+The test matrix validates the application with GCC and Arm Compiler using a `Debug` and `Release` build. It builds and runs the application across the different [Arm Cortex-M processors](https://www.arm.com/products/silicon-ip-cpu?families=cortex-m) and various [Arm Corstone sub-systems](https://www.arm.com/products/silicon-ip-subsystems). It total it validates that 56 different variants execute correct on AVH FVP simulation models that represent a typical implementation of an Arm processor.
 
 ## Prerequisites
 
-- Tools are installed using [vcpkg](https://learn.arm.com/learning-paths/microcontrollers/vcpkg-tool-installation/installation/). The latest version of the tools are available from [ARM tools Artifactory](https://www.keil.arm.com/artifacts/) are installed.
-- Packs are listed in the file [`Hello.csolution.yml`](./Hello.csolution.yml) and installed using `cbuild`.
+- Tools are installed using [vcpkg](https://learn.arm.com/learning-paths/microcontrollers/vcpkg-tool-installation/installation/). The latest version of the tools available from [ARM tools Artifactory](https://www.keil.arm.com/artifacts/) are installed.
+- Packs are listed in the file [`Hello.csolution.yml`](./Hello.csolution.yml) and installed using the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/README.md) `cbuild` utility with the option `--packs`.
 
 ## Project Structure
 
-The project is generated using the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/README.md) and is defined in [`csolution`](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-tools.md#csolution-invocation) format:
+The project is defined in [`csolution`](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-tools.md#csolution-invocation) format that describes the build process using the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/README.md). The 
 
 Files and directories         | Content
 :-----------------------------|----------
