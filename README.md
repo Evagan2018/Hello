@@ -64,9 +64,11 @@ Parameters\Flags              | Description
 **`-f`**                      | Specifies the configuration file needed for the [Arm Virtual Hardware](https://arm-software.github.io/AVH/main/overview/html/index.html) model.
 **`--simlimit`**              | Set the maximum time in seconds for the simulation.
 
-> **Note:**
+> **Notes:**
 >
 > - When using an FVP model for the first time you may need to configure firewalls for the Terminal output.
+> - Depending on the local development computers, the `--simlimit 60` exceeds to execute the full test run. If this is the case increase the value, i.e. to `--simlimit 200`.
+> - Some FVP models simulate very fast and may not synchronize with the Terminal program. In this case use `--quantum 100` to slow down to view the Terminal output.
 
 ## Automated Build and Execute
 
