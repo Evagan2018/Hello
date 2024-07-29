@@ -56,14 +56,14 @@ jobs:
           key: cmsis-packs
           path: /home/runner/.cache/arm/packs
 
-      - name: Build executable
+      - name: Build context Hello.${{ matrix.build.type }}+${{ matrix.target.type }} with ${{ matrix.compiler.name }}
         working-directory: ./
         run: |
             cbuild Hello.csolution.yml --update-rte --packs \
                 --context Hello.${{ matrix.build.type }}+${{ matrix.target.type }} \
                 --toolchain ${{ matrix.compiler.name }} --rebuild
 
-      - name: Execute context Hello.${{ matrix.build.type }}+${{ matrix.target.type }}
+      - name: Execute context Hello.${{ matrix.build.type }}+${{ matrix.target.type }} with ${{ matrix.compiler.name }}
         working-directory: ./
         run: |
             ${{ matrix.target.model }} \
