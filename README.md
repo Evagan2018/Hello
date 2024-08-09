@@ -55,7 +55,7 @@ Parameters\Flags              | Description
 To execute the application on an [AVH FVP simulation model](https://arm-software.github.io/AVH/main/simulation/html/index.html) use the following command line:
 
 ```txt
-> FVP_Corstone_SSE-300 -a ./out/Hello/CS300/Debug/AC6/Hello.axf -f ./FVP/FVP_Corstone_SSE-300.cfg --simlimit 60
+> FVP_Corstone_SSE-300 -a ./out/Hello/CS300/Debug/AC6/Hello.axf -f ./FVP/FVP_Corstone_SSE-300/fvp_config.txt --simlimit 60
 ```
 
 Parameters\Flags              | Description
